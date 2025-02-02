@@ -6,7 +6,7 @@ Member 1: Malavika K P-Mar Athanasius College OF Engineering(Autonomous),Kothama
 Member 2: Jyothika Rajeev-Mar Athanasius College OF Engineering(Autonomous),Kothamangalam
 Member 3: Gayathri S-Mar Athanasius College OF Engineering(Autonomous),Kothamangalam
 Hosted Project Link
-file:///C:/Users/MALAVIKA%20K%20P/Desktop/TINKERHACK/index.html
+https://studymatch-three.vercel.app/
 
 Project Description
 StudyMatch is a web-based platform that connects students based on their major and study interests. By entering their academic details, users are matched with peers who share similar goals, fostering collaboration and peer learning. The platform uses a machine learning-driven recommendation system to suggest study partners, helping students find like-minded individuals for group studies and academic projects. StudyMatch aims to enhance productivity and knowledge sharing within academic communities.
