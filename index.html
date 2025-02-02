@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyMatch</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>StudyMatch</h1>
+    
+    <!-- User Input Form -->
+    <form id="study-form">
+        <input type="text" id="name" placeholder="Enter your name" required><br>  <!-- Name Input -->
+        <input type="text" id="major" placeholder="Enter your major" required><br>
+        <textarea id="interests" placeholder="Enter your study interests" required></textarea><br>
+        <button type="submit">Find Similar Users</button>
+    </form>
+
+    <!-- Display Matched Users -->
+    <h2>Matched Users</h2>
+    <ul id="study-partners"></ul>
+
+    <script>
+        document.getElementById("study-form").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Prevent form reload
+
+            const name = document.getElementById("name").value.trim();  // Get name value
+            const major = document.getElementById("major").value.trim();
+            const interests = document.getElementById("interests").value.trim();
+
+            // Validate input
+            if (!name || !major || !interests) {
+                alert("Please enter your name, major, and study interests.");
+                return;
+            }
+
+            try {
+                // Send the form data to the backend API
+                const response = await fetch("http://localhost:5000/match-students", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ name, major, interests })
+                });
+
+                // Handle non-200 responses
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log("Response from server:", data); // Debugging
+
+                // Display matched users
+                const partnersList = document.getElementById("study-partners");
+                partnersList.innerHTML = "";
+
+                if (data.matchedUsers && data.matchedUsers.length > 0) {
+                    data.matchedUsers.forEach(user => {
+                        const listItem = document.createElement("li");
+                        listItem.textContent = `User: ${user.name} | Major: ${user.major}`;
+                        partnersList.appendChild(listItem);
+                    });
+                } else {
+                    // Handle case when no matches are found
+                    partnersList.innerHTML = "<li>No matching study partners found.</li>";
+                }
+            } catch (error) {
+                console.error("Fetch error:", error);
+                alert("Something went wrong! Please check your connection and try again.");
+            }
+        });
+    </script>
+</body>
+</html> 
